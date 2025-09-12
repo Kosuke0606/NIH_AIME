@@ -1,0 +1,76 @@
+[project]
+name = "huber-aime"
+version = "0.1.0"
+description = "AIME (Approximate Inverse Model Explanations) demos and notebooks"
+readme = "README.md"
+authors = [{ name = "kosukeyano" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "matplotlib>=3.7",
+  "seaborn>=0.12",
+  "scikit-learn>=1.3",
+  "scipy>=1.10",
+  "numba>=0.58",
+  "umap-learn>=0.5",
+  "albumentations>=1.4",
+  "pillow>=9.5",
+  "prettytable>=3.10",
+  "tqdm>=4.66",
+  "lightgbm>=4.0",
+  "kagglehub>=0.2",
+  # PyTorch/torchvision は CPU 版を基本。GPU 版は別途インデックスから入れることを推奨
+  "torch>=2.3; platform_machine != 'aarch64'",
+  "torchvision>=0.18; platform_machine != 'aarch64'",
+  # ノートブック操作
+  "ipykernel>=6.29",
+  "jupyterlab>=4.2",
+  "nvidia-cupynumeric>=0.1.1",
+]
+
+[project.optional-dependencies]
+# GPU 周辺: Ubuntu + CUDA 環境でのみ有効にすることを想定
+rapids = [
+  "cucim-cu12==25.8.*",
+  "cudf-cu12==25.8.*",
+  "cugraph-cu12==25.8.*",
+  "cuml-cu12==25.8.*",
+  "cupy-cuda12x>=12.0; platform_system == 'Linux'",
+  # cudf/cuml は RAPIDS の公式チャネルからの提供が主。uv/pip では wheel がない場合があるため注意。
+  # 必要に応じて conda 環境や公式ホイール URL を利用してください。
+  "cuvs-cu12==25.8.*",
+  "cuxfilter-cu12==25.8.*",
+  "dask-cudf-cu12==25.8.*",
+  "nx-cugraph-cu12==25.8.*",
+  "pylibraft-cu12==25.8.*",
+  "raft-dask-cu12==25.8.*",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[[tool.uv.index]]
+url = "https://pypi.nvidia.com/"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aime_xai*"]
+
+[tool.uv]
+# ここに index-url や extra-index-url の全体設定を置けます（必要に応じて有効化）
+# index-url = "https://pypi.org/simple"
+# extra-index-url = []
+
+[tool.uv.sources]
+# パッケージごとの index を指定する場合の例。PyTorch は公式の index を使うことが多いです。
+# torch = { index = "https://download.pytorch.org/whl/cpu" }
+# torchvision = { index = "https://download.pytorch.org/whl/cpu" }
+# GPU 版の例（コメント解除して利用）
+# torch = { index = "https://download.pytorch.org/whl/cu121" }
+# torchvision = { index = "https://download.pytorch.org/whl/cu121" }
+
+[tool.uv.pip]
+# 互換性のために最新を避けたい場合の制限などをここで追加可能
+# compile-bytecode = true
