@@ -124,7 +124,7 @@ class AIMEEx:
             self.A_dagger = self._calculate_cupynumeric_solve(X_prime, Y_np)
         else:
             raise ValueError(f"未知のメソッドです: {self.method}")
-        print(f"手法 '{self.method}' による近似逆作用素の計算が完了しました。")
+        print(f"手法 '{self.method}' による近似逆作用素の計算が完了")
         print(f"計算時間: {self.computation_time:.4f} 秒")
 
         return self
